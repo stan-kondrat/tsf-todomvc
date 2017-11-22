@@ -1,0 +1,23 @@
+<header class="header">
+	<h1>todos</h1>
+	<input class="new-todo" placeholder="What needs to be done?" autofocus $onkeypress="this.addTodo($event)">
+</header>
+<section class="main">
+	<input id="toggle-all" class="toggle-all" type="checkbox">
+	<label for="toggle-all">Mark all as complete</label>
+	<ul class="todo-list">
+		<li $for="this.todos" class="completed" $attr="{class: this.todos[$index].completed ? 'completed': ''}">
+			<div class="view">
+				<input class="toggle" type="checkbox" checked $onclick="this.toggleTodoComplete($event, this.todos[$index])">
+				<label>{{ this.todos[$index].title }}</label>
+				<button class="destroy" $onclick="this.removeTodo($event, this.todos[$index])"></button>
+			</div>
+		</li>
+	</ul>
+</section>
+<footer class="footer" $if="this.todos.length > 0">
+	<span class="todo-count">
+		<strong>{{ this.todos.length }}</strong> {{ this.todos.length == 1 ? 'item' : 'items' }} left
+	</span>
+	<button class="clear-completed" $if="this.todos.filter(i => i.completed == true).length > 0">Clear completed</button>
+</footer>
